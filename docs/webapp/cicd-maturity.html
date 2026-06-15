@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CI/CD Pipeline Maturity Demo</title>
+    <meta name="description" content="Static Jenkins build-catalog demo for CI/CD maturity and agentic SDLC recommendations." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <p class="eyebrow">Factory Fit Profiler • Jenkins Build Catalog Demo</p>
+      <h1>Catalog daily Jenkins activity to profile CI/CD maturity.</h1>
+      <p class="lede">
+        Review 1,000 mocked Jenkins build records as if an agent were running on a build server,
+        classifying build demographics, DevOps maturity signals, modernization risks, and safe AI insertion points.
+      </p>
+      <nav class="demo-nav" aria-label="Demo navigation">
+        <a href="./index.html">Company profile demo</a>
+        <a aria-current="page" href="./cicd-maturity.html">CI/CD maturity demo</a>
+      </nav>
+    </header>
+    <main class="maturity-layout">
+      <section class="panel maturity-overview" aria-labelledby="overviewTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Mock data source</p>
+            <h2 id="overviewTitle">Jenkins daily build catalog</h2>
+          </div>
+          <a class="data-link" href="./jenkins-build-catalog.json">Open JSON data</a>
+        </div>
+        <div id="catalogStatus" class="empty">Loading mocked Jenkins records…</div>
+        <div id="summaryStats" class="stats maturity-stats" aria-label="Build catalog summary"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="maturityTitle">
+        <h2 id="maturityTitle">DevOps maturity profile</h2>
+        <div id="maturityDimensions" class="dimension-grid"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="suggestionsTitle">
+        <h2 id="suggestionsTitle">Agentic SDLC suggestions</h2>
+        <div id="agentSuggestions" class="suggestion-grid"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="demographicsTitle">
+        <h2 id="demographicsTitle">Build demographics</h2>
+        <div class="chart-grid">
+          <div><h3>Builds by team</h3><div id="teamChart" class="bar-chart"></div></div>
+          <div><h3>Builds by language</h3><div id="languageChart" class="bar-chart"></div></div>
+          <div><h3>Build outcomes</h3><div id="statusChart" class="bar-chart"></div></div>
+          <div><h3>Jenkins agents</h3><div id="agentChart" class="bar-chart"></div></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="recordsTitle">
+        <div class="section-heading">
+          <div><h2 id="recordsTitle">Representative build records</h2><p>Showing the busiest and riskiest records from the mocked catalog.</p></div>
+          <span id="recordCount" class="badge"></span>
+        </div>
+        <div class="table-wrap"><table id="recordsTable"></table></div>
+      </section>
+    </main>
+    <footer>
+      Synthetic data only: this demo models what a Jenkins-side agent could summarize without connecting to a live enterprise server.
+    </footer>
+    <script src="./cicd-maturity.js"></script>
+  </body>
+</html>

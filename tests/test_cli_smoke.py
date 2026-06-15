@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import io
+import json
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
@@ -143,6 +144,29 @@ class ServerWaveThreeTests(unittest.TestCase):
 
         self.assertEqual(exit_code, 0)
         self.assertIn("name: delivery-manifest-ci", output.getvalue())
+
+
+class WebappDemoTests(unittest.TestCase):
+    def test_jenkins_catalog_contains_daily_build_volume(self) -> None:
+        catalog_path = Path("docs/webapp/jenkins-build-catalog.json")
+        catalog = json.loads(catalog_path.read_text())
+
+        self.assertEqual(catalog["summary"]["recordCount"], 1000)
+        self.assertEqual(len(catalog["buildRecords"]), 1000)
+        self.assertGreaterEqual(len(catalog["maturityDimensions"]), 5)
+        for record in catalog["buildRecords"]:
+            with self.subTest(build=record["buildId"]):
+                self.assertTrue(record["controller"].startswith("jenkins-"))
+                self.assertIn("maturitySignals", record)
+                self.assertIn("securityScan", record)
+                self.assertIn("deployableArtifact", record)
+
+    def test_cicd_maturity_page_links_catalog(self) -> None:
+        page = Path("docs/webapp/cicd-maturity.html").read_text()
+
+        self.assertIn("jenkins-build-catalog.json", page)
+        self.assertIn("CI/CD maturity demo", page)
+        self.assertIn("cicd-maturity.js", page)
 
 
 if __name__ == "__main__":
