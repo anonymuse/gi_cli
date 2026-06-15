@@ -114,6 +114,26 @@ tests/                         Smoke and vertical-slice tests
 docs/                          Planning, architecture, and execution notes
 ```
 
+
+## Static Company Profile Demo
+
+A static GitHub Pages demo is available under `docs/webapp/`. It accepts mocked company-profile markdown from a pasted textarea, uploaded `.md` file, or bundled sample and turns it into a browser-only readiness profile.
+
+The demo is designed to illustrate the README thesis without requiring backend services or live DevOps integrations:
+
+- Parse repository sections from markdown input.
+- Classify language, build system, CI/CD hints, and evidence signals.
+- Summarize factory readiness across the company.
+- Recommend the same style of SDLC blueprint lanes used by the fixture-backed CLI.
+
+To run locally, serve the repository root with any static file server and open `docs/webapp/index.html`:
+
+```bash
+python -m http.server 8000
+```
+
+Then visit `http://localhost:8000/docs/webapp/`. For GitHub Pages, configure Pages to publish from the repository `docs/` folder and use `/webapp/` as the demo path.
+
 ## Example Commands
 
 Run the fixture-backed server vertical slice:
@@ -148,6 +168,7 @@ py -m sdlc_adaptation_agent.local_cli windows-guide --summary
 # Option B: install the package in editable mode, then run the app command
 py -m pip install -e .
 sdlc-windows-guide
+
 ```
 
 The guide walks a developer through installing GitHub access tools, cloning a repository, installing Claude CLI, opening Visual Studio, running a bounded agentic coding loop, and creating a pull request for GenAI and human review. Operating-system actions are intentionally explicit and user-triggered: the app can open documentation, copy command templates, and attempt to launch Visual Studio, but it does not read secrets, push code, merge pull requests, or perform unrestricted desktop automation.

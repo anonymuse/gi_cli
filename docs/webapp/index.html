@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Factory Fit Profiler Demo</title>
+    <meta name="description" content="Static markdown-driven demo for Factory Fit Profiler company profiling." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <p class="eyebrow">Factory Fit Profiler • Static GitHub Pages Demo</p>
+      <h1>Turn mocked markdown into an evidence-backed company profile.</h1>
+      <p class="lede">
+        Paste or upload a markdown company brief to demonstrate the README workflow: classify repositories,
+        identify readiness, recommend SDLC blueprints, and keep the path traceable from evidence to action.
+      </p>
+    </header>
+    <main class="grid">
+      <section class="panel composer" aria-labelledby="inputTitle">
+        <h2 id="inputTitle">Markdown input</h2>
+        <p>Use headings for repositories and bullet facts for language, build system, CI/CD, and evidence.</p>
+        <div class="controls">
+          <button id="loadSample" class="secondary" type="button">Load mock profile</button>
+          <label class="file-label" for="fileInput">Upload .md file</label>
+          <input id="fileInput" type="file" accept=".md,text/markdown,text/plain" />
+          <button id="analyze" type="button">Analyze markdown</button>
+        </div>
+        <textarea id="markdownInput" spellcheck="false" aria-label="Company profile markdown"></textarea>
+      </section>
+      <section class="panel results" aria-labelledby="resultsTitle">
+        <h2 id="resultsTitle">Company profile</h2>
+        <div id="results"></div>
+      </section>
+    </main>
+    <footer>
+      This demo is intentionally static: no backend, no live DevOps connections, and no data leaves the browser.
+    </footer>
+    <script src="./app.js"></script>
+  </body>
+</html>
