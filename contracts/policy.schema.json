@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sdlc-adaptation-agent/policy.schema.json",
+  "title": "Policy",
+  "type": "object",
+  "required": ["id", "allowed_without_approval", "requires_approval", "forbidden"],
+  "properties": {
+    "id": {"type": "string"},
+    "allowed_without_approval": {"type": "array", "items": {"type": "string"}},
+    "requires_approval": {"type": "array", "items": {"type": "string"}},
+    "forbidden": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sdlc-adaptation-agent/eval.schema.json",
+  "title": "Eval",
+  "type": "object",
+  "required": ["id", "type", "dimensions"],
+  "properties": {
+    "id": {"type": "string"},
+    "type": {"const": "patch_quality"},
+    "dimensions": {
+      "type": "object",
+      "required": ["correctness", "buildability", "minimality"],
+      "properties": {
+        "correctness": {"type": "number", "minimum": 0, "maximum": 1},
+        "buildability": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimality": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sdlc-adaptation-agent/delivery-manifest.schema.json",
+  "title": "DeliveryManifest",
+  "type": "object",
+  "required": ["id", "service", "build", "test", "delivery"],
+  "properties": {
+    "id": {"type": "string"},
+    "service": {"type": "string"},
+    "build": {"type": "object"},
+    "test": {"type": "object"},
+    "delivery": {"type": "object"}
+  },
+  "additionalProperties": false
+}
