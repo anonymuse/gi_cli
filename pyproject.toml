@@ -11,6 +11,7 @@ requires-python = ">=3.11"
 [project.scripts]
 sdlc-local = "sdlc_adaptation_agent.local_cli:main"
 sdlc-server = "sdlc_adaptation_agent.server_cli:main"
+sdlc-windows-guide = "sdlc_adaptation_agent.windows_guide:run_app"
 
 [tool.setuptools.packages.find]
 where = ["src"]

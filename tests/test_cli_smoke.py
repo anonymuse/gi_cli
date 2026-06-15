@@ -7,7 +7,7 @@ import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
 
-from sdlc_adaptation_agent import local_cli, server_cli
+from sdlc_adaptation_agent import local_cli, server_cli, windows_guide
 from sdlc_adaptation_agent.blueprints import recommend_blueprints
 from sdlc_adaptation_agent.fixtures import load_company_fixture
 from sdlc_adaptation_agent.inventory import inventory_fixture
@@ -23,13 +23,35 @@ class LocalCliSmokeTests(unittest.TestCase):
         parser = local_cli.build_parser()
         help_text = parser.format_help()
 
-        for command in ["doctor", "explain", "first-commit", "coach", "harness", "eval"]:
+        for command in ["doctor", "explain", "first-commit", "coach", "windows-guide", "harness", "eval"]:
             with self.subTest(command=command):
                 self.assertIn(command, help_text)
 
     def test_nested_local_commands_run_as_placeholders(self) -> None:
         self.assertEqual(local_cli.main(["harness", "create"]), 0)
         self.assertEqual(local_cli.main(["eval", "patch-quality"]), 0)
+
+    def test_windows_guide_summary_covers_required_workflow(self) -> None:
+        output = io.StringIO()
+        with redirect_stdout(output):
+            exit_code = local_cli.main(["windows-guide", "--summary"])
+
+        summary = output.getvalue()
+        self.assertEqual(exit_code, 0)
+        self.assertIn("GitHub", summary)
+        self.assertIn("Claude CLI", summary)
+        self.assertIn("Visual Studio", summary)
+        self.assertIn("GenAI", summary)
+        self.assertIn("human", summary.lower())
+        self.assertIn("merge", summary.lower())
+
+    def test_windows_guide_steps_are_human_gated(self) -> None:
+        self.assertGreaterEqual(len(windows_guide.WORKFLOW_STEPS), 6)
+        for step in windows_guide.WORKFLOW_STEPS:
+            with self.subTest(step=step.title):
+                self.assertTrue(step.human_action)
+                self.assertTrue(step.genai_action)
+                self.assertTrue(step.automation)
 
 
 class ServerCliSmokeTests(unittest.TestCase):
