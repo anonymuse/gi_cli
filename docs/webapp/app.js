@@ -1,10 +1,10 @@
-const sampleMarkdown = `# Synthetic Portfolio Company
+const sampleMarkdown = `# Medical Records Processor
 
-A portfolio company with mixed repository maturity, CI conventions, and modernization readiness.
+A healthcare operations company with mixed repository maturity, CI conventions, and modernization readiness.
 
 ## Repositories
 
-### customer-portal
+### custom-report
 - Language: Node
 - Runtime: 20
 - Package manager: npm
@@ -28,7 +28,7 @@ A portfolio company with mixed repository maturity, CI conventions, and moderniz
 - CI/CD: Jenkins
 - Evidence: pom.xml declares Java 17; Jenkinsfile runs mvn test.
 
-### legacy-ops-tools
+### legacy-ops-tool
 - Language: Unknown
 - Runtime: Unknown
 - Package manager: Unknown
@@ -44,23 +44,81 @@ const blueprintByLanguage = {
   unknown: 'Legacy Repository Assessment Blueprint',
 };
 
+const repoDetails = {
+  'custom-report': {
+    title: 'Custom Report',
+    description: 'Generates medical-record summary reports for care coordinators. The repository is ready for agentic acceleration because it has reproducible package metadata, automated tests, and a modern Node build path.',
+    enhancement: 'Create a LangGraph report QA workflow that drafts synthetic report fixtures, runs Vitest, validates accessibility of rendered report components, and opens a pull request with evidence attached.',
+    pseudocode: `workflow CustomReportQA:
+  changedFiles = git.diff()
+  if changedFiles.include("report templates"):
+    fixtures = agent.generateSyntheticRecords(schema="HIPAA-safe")
+    run("npm test -- --runInBand", fixtures)
+    eval("report_completeness", threshold=0.95)
+    agent.openPullRequest(summary, evidence)`
+  },
+  'risk-api': {
+    title: 'Risk API',
+    description: 'Scores patient and operational risk through a Python API. Strong Python project metadata and pytest signals make it a good candidate for an agent-assisted API safety and regression workflow.',
+    enhancement: 'Add a custom risk-contract agent that proposes endpoint changes, generates pytest coverage for edge cases, and runs an eval suite that checks calibration drift and response-contract compatibility.',
+    pseudocode: `agent RiskContractAgent:
+  spec = load_openapi()
+  tests = create_pytest_cases(spec, edgeCases=["missing data", "high acuity"])
+  run("poetry run pytest")
+  eval("risk_score_calibration", goldenSet="clinical-risk-fixtures")
+  block_merge_if(contract_breaks or drift > 0.02)`
+  },
+  'billing-batch': {
+    title: 'Billing Batch',
+    description: 'Runs scheduled billing reconciliation and claim-preparation jobs. The Maven and Jenkins foundation supports a controlled agentic workflow for batch-job refactors and test generation.',
+    enhancement: 'Build a LangChain modernization chain that reads failing Jenkins stages, proposes narrow Java changes, generates Maven tests for billing edge cases, and routes high-risk claim changes for human review.',
+    pseudocode: `chain BillingBatchFixer:
+  logs = jenkins.getLastFailedBuild()
+  hypothesis = agent.explainFailure(logs)
+  patch = agent.proposeJavaPatch(scope="billing reconciliation")
+  run("mvn test")
+  if touchesClaimRules(patch): requestHumanApproval()
+  else createPullRequest(patch, testEvidence)`
+  },
+  'legacy-ops-tool': {
+    title: 'Legacy Ops Tool',
+    description: 'Contains manual release scripts and sparse metadata, so it should be stabilized before broad automation. The best next step is to let agents inventory behavior while humans keep release authority.',
+    enhancement: 'Use an agentic remediation workflow that maps shell-script behavior, adds characterization tests, extracts configuration into typed manifests, and only then proposes CI jobs that replace checklist steps.',
+    pseudocode: `workflow LegacyOpsRemediation:
+  scripts = agent.inventoryShellScripts()
+  behaviorMap = agent.traceInputsOutputs(scripts)
+  tests = agent.writeCharacterizationTests(behaviorMap)
+  run("./build.sh --dry-run")
+  createBacklog(items=["typed config", "CI wrapper", "release guardrails"])
+  requireHumanReviewFor(allPatches)`
+  },
+};
+
 const markdownInput = document.querySelector('#markdownInput');
 const fileInput = document.querySelector('#fileInput');
 const results = document.querySelector('#results');
+const detailRoot = document.querySelector('#repoDetail');
 
-document.querySelector('#loadSample').addEventListener('click', () => {
+if (document.querySelector('#loadSample')) {
+  document.querySelector('#loadSample').addEventListener('click', () => {
+    markdownInput.value = sampleMarkdown;
+    renderProfile(sampleMarkdown);
+  });
+
+  document.querySelector('#analyze').addEventListener('click', () => renderProfile(markdownInput.value));
+
+  fileInput.addEventListener('change', async (event) => {
+    const [file] = event.target.files;
+    if (!file) return;
+    markdownInput.value = await file.text();
+    renderProfile(markdownInput.value);
+  });
+
   markdownInput.value = sampleMarkdown;
   renderProfile(sampleMarkdown);
-});
+}
 
-document.querySelector('#analyze').addEventListener('click', () => renderProfile(markdownInput.value));
-
-fileInput.addEventListener('change', async (event) => {
-  const [file] = event.target.files;
-  if (!file) return;
-  markdownInput.value = await file.text();
-  renderProfile(markdownInput.value);
-});
+if (detailRoot) renderRepoDetail();
 
 function parseCompany(markdown) {
   const lines = markdown.split(/\r?\n/);
@@ -134,22 +192,49 @@ function renderProfile(markdown) {
 function renderRepo(repo) {
   const { profile } = repo;
   const badgeClass = profile.score >= 75 ? 'good' : profile.score >= 50 ? 'warn' : 'risk';
-  return `<article class="repo">
-    <h3>${escapeHtml(repo.name)} <span class="badge ${badgeClass}">${profile.score}% ready</span></h3>
+  const detail = getRepoDetail(repo.name);
+  const enhancementLabel = profile.score === 50 ? 'Maturity enhancement recommendation' : 'Agentic enhancement';
+  return `<a class="repo-link" href="./repo.html?repo=${encodeURIComponent(repo.name)}" aria-label="Open ${escapeHtml(detail.title)} details"><article class="repo">
+    <h3>${escapeHtml(detail.title)} <span class="badge ${badgeClass}">${profile.score}% ready</span></h3>
     <div class="meta">
       <span class="badge">${escapeHtml(profile.language)}</span>
       <span class="badge">${escapeHtml(profile.buildSystem)}</span>
       <span class="badge">${escapeHtml(profile.ci)}</span>
     </div>
     <p><strong>Recommended lane:</strong> ${escapeHtml(profile.lane)}</p>
-    <p><strong>Blueprint:</strong> ${escapeHtml(profile.blueprint)}</p>
+    <p><strong>Recommended Lang blueprint:</strong> ${escapeHtml(profile.blueprint)}</p>
     <p><strong>Evidence:</strong> ${escapeHtml(repo.evidence.join(' ') || 'No explicit evidence supplied.')}</p>
-  </article>`;
+    <p><strong>${enhancementLabel}:</strong> ${escapeHtml(detail.enhancement)}</p>
+  </article></a>`;
+}
+
+function renderRepoDetail() {
+  const repoName = new URLSearchParams(window.location.search).get('repo') || 'custom-report';
+  const company = parseCompany(sampleMarkdown);
+  const repo = company.repos.find((item) => item.name === repoName) || company.repos[0];
+  const profile = classify(repo);
+  const detail = getRepoDetail(repo.name);
+  const badgeClass = profile.score >= 75 ? 'good' : profile.score >= 50 ? 'warn' : 'risk';
+  detailRoot.innerHTML = `<section class="panel detail-card">
+    <a class="back-link" href="./index.html">← Back to company profile</a>
+    <h2>${escapeHtml(detail.title)}</h2>
+    <span class="badge ${badgeClass}">${profile.score}% ready</span>
+    <p class="lede small">${escapeHtml(detail.description)}</p>
+    <div class="detail-grid">
+      <div><h3>Recommended lane</h3><p>${escapeHtml(profile.lane)}</p></div>
+      <div><h3>Recommended Lang blueprint</h3><p>${escapeHtml(profile.blueprint)}</p></div>
+      <div><h3>Evidence</h3><p>${escapeHtml(repo.evidence.join(' ') || 'No explicit evidence supplied.')}</p></div>
+      <div><h3>${profile.score === 50 ? 'Maturity enhancement recommendation' : 'Agentic enhancement'}</h3><p>${escapeHtml(detail.enhancement)}</p></div>
+    </div>
+    <h3>Pseudocode snippet</h3>
+    <pre><code>${escapeHtml(detail.pseudocode)}</code></pre>
+  </section>`;
+}
+
+function getRepoDetail(repoName) {
+  return repoDetails[repoName] || { title: repoName, description: 'Repository detail.', enhancement: 'Create an agentic workflow tailored to the repository maturity signals.', pseudocode: 'agent.run()' };
 }
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
 }
-
-markdownInput.value = sampleMarkdown;
-renderProfile(sampleMarkdown);
