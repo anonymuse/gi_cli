@@ -1,0 +1,16 @@
+{
+  "id": "manifest-invalid",
+  "project": {
+    "repository_id": "repo-node-web"
+  },
+  "runtime": {
+    "language": "node"
+  },
+  "commands": {
+    "install": "npm ci",
+    "build": "npm run build"
+  },
+  "deployment": {
+    "placeholder": false
+  }
+}

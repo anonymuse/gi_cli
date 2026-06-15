@@ -1,0 +1,40 @@
+{
+  "id": "synthetic-company",
+  "name": "Synthetic Portfolio Company",
+  "repositories": [
+    {
+      "id": "repo-node-web",
+      "name": "customer-portal",
+      "files": {
+        "package.json": "{\"scripts\":{\"build\":\"vite build\",\"test\":\"vitest run\",\"lint\":\"eslint .\"},\"engines\":{\"node\":\">=20\"},\"dependencies\":{\"@vitejs/plugin-react\":\"latest\"}}",
+        "package-lock.json": "{}",
+        ".github/workflows/ci.yml": "name: ci\non: [push]\njobs:\n  test:\n    runs-on: ubuntu-latest"
+      }
+    },
+    {
+      "id": "repo-python-api",
+      "name": "risk-api",
+      "files": {
+        "pyproject.toml": "[project]\nrequires-python = \">=3.11\"\n[tool.pytest.ini_options]\ntestpaths = [\"tests\"]",
+        "poetry.lock": "# synthetic lockfile",
+        ".github/workflows/python.yml": "name: python-ci\non: [pull_request]"
+      }
+    },
+    {
+      "id": "repo-java-batch",
+      "name": "billing-batch",
+      "files": {
+        "pom.xml": "<project><modelVersion>4.0.0</modelVersion><properties><maven.compiler.release>17</maven.compiler.release></properties></project>",
+        "Jenkinsfile": "pipeline { agent any; stages { stage('test') { steps { sh 'mvn test' } } } }"
+      }
+    },
+    {
+      "id": "repo-legacy-tools",
+      "name": "legacy-ops-tools",
+      "files": {
+        "README.txt": "Legacy operations scripts. Manual release checklist lives in the wiki.",
+        "build.sh": "#!/usr/bin/env sh\necho legacy build"
+      }
+    }
+  ]
+}

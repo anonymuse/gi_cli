@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sdlc-adaptation-agent/evidence.schema.json",
+  "title": "Evidence",
+  "type": "object",
+  "required": ["id", "source_type", "source_location", "observed_value", "timestamp", "confidence", "related_finding_id"],
+  "properties": {
+    "id": {"type": "string"},
+    "source_type": {"enum": ["file", "command", "api", "fixture", "user_input"]},
+    "source_location": {"type": "string"},
+    "observed_value": {"type": "string"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "related_finding_id": {"type": "string"}
+  },
+  "additionalProperties": false
+}
