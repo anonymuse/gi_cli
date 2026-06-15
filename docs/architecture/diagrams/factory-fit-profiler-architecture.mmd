@@ -1,0 +1,13 @@
+flowchart LR
+    A[Assess\nInventory repos, delivery tooling, CI/CD, scanners, artifacts] --> B[Onboard\nLocal developer guidance, safe first change, agent harness]
+    B --> C[Retrofit\nMap existing delivery paths to SDLC blueprints]
+    C --> D[Automate\nValidate DeliveryManifest and compile deterministic workflows]
+    D --> E[Govern\nAttach evidence, policy controls, traces, and evals]
+    E --> F[Scale\nPortfolio reporting and repeatable factory adoption]
+
+    L[Local Workstation Agent] --> B
+    L --> E
+    S[Server-Side SDLC Agent] --> A
+    S --> C
+    S --> D
+    S --> E
