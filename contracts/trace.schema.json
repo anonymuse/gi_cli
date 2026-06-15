@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sdlc-adaptation-agent/trace.schema.json",
+  "title": "Trace",
+  "type": "object",
+  "required": ["id", "operation", "inputs", "outputs", "evidence_ids"],
+  "properties": {
+    "id": {"type": "string"},
+    "operation": {"type": "string"},
+    "inputs": {"type": "array", "items": {"type": "string"}},
+    "outputs": {"type": "array", "items": {"type": "string"}},
+    "evidence_ids": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}
