@@ -142,6 +142,8 @@ docs/                          Planning, architecture, demo, and execution notes
 
 ## Static Company Profile Demo
 
+Open the published GitHub Pages demo here: [Factory Fit Profiler webapp](https://jessejwhite.github.io/gi_cli/).
+
 A static GitHub Pages demo is available under `docs/webapp/`. It accepts mocked company-profile markdown from a pasted textarea, uploaded `.md` file, or bundled sample and turns it into a browser-only readiness profile. A second page, `docs/webapp/cicd-maturity.html`, loads `docs/webapp/jenkins-build-catalog.json` with 1,000 mocked Jenkins build records to show CI/CD pipeline maturity, build demographics, and agentic SDLC recommendations.
 
 The demo is designed to illustrate the README thesis without requiring backend services or live DevOps integrations:
