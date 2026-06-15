@@ -98,6 +98,7 @@ const markdownInput = document.querySelector('#markdownInput');
 const fileInput = document.querySelector('#fileInput');
 const results = document.querySelector('#results');
 const detailRoot = document.querySelector('#repoDetail');
+const activeMarkdownStorageKey = 'factoryFitProfiler.activeMarkdown';
 
 if (document.querySelector('#loadSample')) {
   document.querySelector('#loadSample').addEventListener('click', () => {
@@ -114,8 +115,8 @@ if (document.querySelector('#loadSample')) {
     renderProfile(markdownInput.value);
   });
 
-  markdownInput.value = sampleMarkdown;
-  renderProfile(sampleMarkdown);
+  markdownInput.value = getActiveMarkdown();
+  renderProfile(markdownInput.value);
 }
 
 if (detailRoot) renderRepoDetail();
@@ -164,6 +165,7 @@ function normalize(value) {
 }
 
 function renderProfile(markdown) {
+  persistActiveMarkdown(markdown);
   const company = parseCompany(markdown);
   if (!company.repos.length) {
     results.innerHTML = '<div class="empty">Add markdown with <code>### repository-name</code> sections and facts like <code>- Language: Python</code>.</div>';
@@ -209,9 +211,18 @@ function renderRepo(repo) {
 }
 
 function renderRepoDetail() {
-  const repoName = new URLSearchParams(window.location.search).get('repo') || 'custom-report';
-  const company = parseCompany(sampleMarkdown);
+  const repoName = new URLSearchParams(window.location.search).get('repo');
+  const company = parseCompany(getActiveMarkdown());
   const repo = company.repos.find((item) => item.name === repoName) || company.repos[0];
+
+  if (!repo) {
+    detailRoot.innerHTML = `<section class="panel detail-card">
+      <a class="back-link" href="./index.html">← Back to company profile</a>
+      <div class="empty">No repository sections were found in the active markdown profile.</div>
+    </section>`;
+    return;
+  }
+
   const profile = classify(repo);
   const detail = getRepoDetail(repo.name);
   const badgeClass = profile.score >= 75 ? 'good' : profile.score >= 50 ? 'warn' : 'risk';
@@ -221,6 +232,7 @@ function renderRepoDetail() {
     <span class="badge ${badgeClass}">${profile.score}% ready</span>
     <p class="lede small">${escapeHtml(detail.description)}</p>
     <div class="detail-grid">
+      <div><h3>Company</h3><p>${escapeHtml(company.companyName)}</p></div>
       <div><h3>Recommended lane</h3><p>${escapeHtml(profile.lane)}</p></div>
       <div><h3>Recommended Lang blueprint</h3><p>${escapeHtml(profile.blueprint)}</p></div>
       <div><h3>Evidence</h3><p>${escapeHtml(repo.evidence.join(' ') || 'No explicit evidence supplied.')}</p></div>
@@ -229,6 +241,22 @@ function renderRepoDetail() {
     <h3>Pseudocode snippet</h3>
     <pre><code>${escapeHtml(detail.pseudocode)}</code></pre>
   </section>`;
+}
+
+function persistActiveMarkdown(markdown) {
+  try {
+    window.sessionStorage.setItem(activeMarkdownStorageKey, markdown);
+  } catch (error) {
+    // The detail page can still fall back to the bundled sample if storage is unavailable.
+  }
+}
+
+function getActiveMarkdown() {
+  try {
+    return window.sessionStorage.getItem(activeMarkdownStorageKey) || sampleMarkdown;
+  } catch (error) {
+    return sampleMarkdown;
+  }
 }
 
 function getRepoDetail(repoName) {
