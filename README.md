@@ -149,6 +149,7 @@ The demo is designed to illustrate the README thesis without requiring backend s
 - Parse repository sections from markdown input.
 - Classify language, build system, CI/CD hints, and evidence signals.
 - Summarize factory readiness across the company.
+- Try a richer upload-ready demo profile at `docs/webapp/contoso-live-demo.md`.
 - Recommend the same style of SDLC blueprint lanes used by the fixture-backed CLI.
 
 To run locally, serve the repository root with any static file server and open `docs/webapp/index.html`:
