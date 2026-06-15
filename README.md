@@ -89,7 +89,7 @@ The MVP does not:
 - Install system dependencies automatically.
 - Support every language, framework, or CI provider.
 - Perform live deployment orchestration.
-- Provide unrestricted desktop automation.
+- Provide unrestricted desktop control.
 - Read secrets, credential stores, SSH configuration, private keys, or private environment files.
 
 ## Domain Contracts
@@ -153,7 +153,7 @@ PYTHONPATH=src python -m unittest discover -s tests -v
 
 ### Windows Agentic Coding Guide
 
-The local workstation mode includes a simple Windows-oriented Tkinter guide for a human-led GenAI coding workflow. From a Windows PowerShell terminal on your PC, clone the repo, enter the repo folder, and run either the no-install module command or install the console script:
+The local workstation mode includes a simple Windows-oriented Tkinter guide for a human-led LLM coding workflow. From a Windows PowerShell terminal on your PC, clone the repo, enter the repo folder, and run either the no-install module command or install the console script:
 
 ```powershell
 # Option A: run directly from a cloned checkout
@@ -171,7 +171,7 @@ sdlc-windows-guide
 
 ```
 
-The guide walks a developer through installing GitHub access tools, cloning a repository, installing Claude CLI, opening Visual Studio, running a bounded agentic coding loop, and creating a pull request for GenAI and human review. Operating-system actions are intentionally explicit and user-triggered: the app can open documentation, copy command templates, and attempt to launch Visual Studio, but it does not read secrets, push code, merge pull requests, or perform unrestricted desktop automation.
+The guide walks a developer through installing GitHub access tools, cloning a repository, installing Claude CLI, opening Visual Studio, running a bounded agentic coding loop, and creating a pull request for LLM and human review. Operating-system actions are intentionally explicit and user-triggered: the app can open documentation, copy command templates, and attempt to launch Visual Studio, but it does not read secrets, push code, merge pull requests, or perform unrestricted desktop control.
 
 ## Development Principles
 

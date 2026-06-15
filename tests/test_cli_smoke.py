@@ -42,7 +42,7 @@ class LocalCliSmokeTests(unittest.TestCase):
         self.assertIn("GitHub", summary)
         self.assertIn("Claude CLI", summary)
         self.assertIn("Visual Studio", summary)
-        self.assertIn("GenAI", summary)
+        self.assertIn("LLM", summary)
         self.assertIn("human", summary.lower())
         self.assertIn("merge", summary.lower())
 
@@ -51,8 +51,10 @@ class LocalCliSmokeTests(unittest.TestCase):
         for step in windows_guide.WORKFLOW_STEPS:
             with self.subTest(step=step.title):
                 self.assertTrue(step.human_action)
-                self.assertTrue(step.genai_action)
-                self.assertTrue(step.automation)
+                self.assertTrue(step.llm_action)
+                self.assertTrue(step.task_guidance)
+                self.assertTrue(step.screenshot_caption)
+                self.assertTrue(step.popup_message)
 
 
 class ServerCliSmokeTests(unittest.TestCase):
