@@ -153,11 +153,22 @@ PYTHONPATH=src python -m unittest discover -s tests -v
 
 ### Windows Agentic Coding Guide
 
-The local workstation mode includes a simple Windows-oriented Tkinter guide for a human-led GenAI coding workflow:
+The local workstation mode includes a simple Windows-oriented Tkinter guide for a human-led GenAI coding workflow. From a Windows PowerShell terminal on your PC, clone the repo, enter the repo folder, and run either the no-install module command or install the console script:
 
-```bash
-PYTHONPATH=src python -m sdlc_adaptation_agent.local_cli windows-guide --summary
-PYTHONPATH=src python -m sdlc_adaptation_agent.windows_guide
+```powershell
+# Option A: run directly from a cloned checkout
+$env:PYTHONPATH = "src"
+py -m sdlc_adaptation_agent.windows_guide
+
+# Optional: print the workflow in the terminal instead of opening the window
+py -m sdlc_adaptation_agent.local_cli windows-guide --summary
+```
+
+```powershell
+# Option B: install the package in editable mode, then run the app command
+py -m pip install -e .
+sdlc-windows-guide
+
 ```
 
 The guide walks a developer through installing GitHub access tools, cloning a repository, installing Claude CLI, opening Visual Studio, running a bounded agentic coding loop, and creating a pull request for GenAI and human review. Operating-system actions are intentionally explicit and user-triggered: the app can open documentation, copy command templates, and attempt to launch Visual Studio, but it does not read secrets, push code, merge pull requests, or perform unrestricted desktop automation.
