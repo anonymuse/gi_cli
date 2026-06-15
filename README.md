@@ -132,7 +132,7 @@ To run locally, serve the repository root with any static file server and open `
 python -m http.server 8000
 ```
 
-Then visit `http://localhost:8000/docs/webapp/`. For GitHub Pages, configure Pages to publish from the repository `docs/` folder and use `/webapp/` as the demo path.
+Then visit `http://localhost:8000/docs/` to use the same redirect entry point that GitHub Pages serves, or open `http://localhost:8000/docs/webapp/` directly. For GitHub Pages, configure Pages to publish from the repository `docs/` folder; `docs/index.html` redirects the site root to `/webapp/`. See `docs/GITHUB_PAGES.md` for the step-by-step setup and troubleshooting guide.
 
 ## Example Commands
 
