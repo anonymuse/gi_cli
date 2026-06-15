@@ -3,13 +3,59 @@
   "$id": "https://example.invalid/sdlc-adaptation-agent/delivery-manifest.schema.json",
   "title": "DeliveryManifest",
   "type": "object",
-  "required": ["id", "service", "build", "test", "delivery"],
+  "required": ["id", "project", "runtime", "commands", "evidence_outputs", "deployment"],
   "properties": {
     "id": {"type": "string"},
-    "service": {"type": "string"},
-    "build": {"type": "object"},
-    "test": {"type": "object"},
-    "delivery": {"type": "object"}
+    "project": {
+      "type": "object",
+      "required": ["name", "repository_id"],
+      "properties": {
+        "name": {"type": "string"},
+        "repository_id": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["language", "version"],
+      "properties": {
+        "language": {"type": "string"},
+        "version": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "commands": {
+      "type": "object",
+      "required": ["install", "build", "test"],
+      "properties": {
+        "install": {"type": "string"},
+        "build": {"type": "string"},
+        "test": {"type": "string"},
+        "scan": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "package": {
+      "type": "object",
+      "properties": {
+        "type": {"type": "string"},
+        "image_name": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "evidence_outputs": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "deployment": {
+      "type": "object",
+      "required": ["placeholder"],
+      "properties": {
+        "placeholder": {"const": true},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
   },
   "additionalProperties": false
 }

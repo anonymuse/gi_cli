@@ -1,0 +1,26 @@
+{
+  "id": "manifest-customer-portal",
+  "project": {
+    "name": "customer-portal",
+    "repository_id": "repo-node-web"
+  },
+  "runtime": {
+    "language": "node",
+    "version": "20"
+  },
+  "commands": {
+    "install": "npm ci",
+    "build": "npm run build",
+    "test": "npm test",
+    "scan": "npm audit --audit-level=high"
+  },
+  "package": {
+    "type": "container",
+    "image_name": "customer-portal"
+  },
+  "evidence_outputs": ["ev-repo-node-web-package-json"],
+  "deployment": {
+    "placeholder": true,
+    "notes": "Deployment intentionally out of MVP scope."
+  }
+}
