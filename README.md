@@ -4,6 +4,29 @@ Factory Fit Profiler is a dual-mode SDLC adaptation agent for private-equity por
 
 The project treats modernization as an operating capability, not a one-time tooling rollout. Portfolio companies often include legacy systems, uneven documentation, fragmented DevOps tooling, manual release processes, inherited architectures, vendor constraints, security requirements, and business obligations that cannot pause while a clean-room SDLC factory is introduced. Factory Fit Profiler creates the diagnostic, onboarding, governance, and automation layer that makes factory adoption repeatable across those conditions.
 
+
+## Product Specification and Architecture
+
+The product specification is the architectural basis for the tool: [`docs/product/factory-fit-profiler-product-spec.md`](docs/product/factory-fit-profiler-product-spec.md). Architecture notes and Mermaid diagram source live under [`docs/architecture/`](docs/architecture/).
+
+The README and product specification use the same canonical lifecycle and mode split:
+
+```mermaid
+flowchart LR
+    A[Assess\nInventory repos, delivery tooling, CI/CD, scanners, artifacts] --> B[Onboard\nLocal developer guidance, safe first change, agent harness]
+    B --> C[Retrofit\nMap existing delivery paths to SDLC blueprints]
+    C --> D[Automate\nValidate DeliveryManifest and compile deterministic workflows]
+    D --> E[Govern\nAttach evidence, policy controls, traces, and evals]
+    E --> F[Scale\nPortfolio reporting and repeatable factory adoption]
+
+    L[Local Workstation Agent] --> B
+    L --> E
+    S[Server-Side SDLC Agent] --> A
+    S --> C
+    S --> D
+    S --> E
+```
+
 ## Mission
 
 Help operators and engineering teams move from portfolio-level SDLC ambiguity to evidence-backed factory adoption decisions.
@@ -111,7 +134,9 @@ contracts/                    Shared JSON schemas for manifests, evidence, polic
 fixtures/synthetic-company/    Synthetic portfolio-company data and example manifests
 src/sdlc_adaptation_agent/     Local and server CLI implementation modules
 tests/                         Smoke and vertical-slice tests
-docs/                          Planning, architecture, and execution notes
+docs/product/                  Product specification and canonical product architecture
+docs/architecture/             Architecture notes and Mermaid diagram source
+docs/                          Planning, architecture, demo, and execution notes
 ```
 
 
